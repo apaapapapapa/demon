@@ -1,0 +1,14 @@
+{
+  "name": "demon",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/apaapapapapa/demon.git",
+  "author": "KoheiHara",
+  "license": "MIT",
+  "dependencies": {
+    "demon": "file:",
+    "htmx.org": "^1.9.12",
+    "tailwindcss": "^3.4.16",
+    "yarn": "^1.22.22"
+  }
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jakarta EE + HTMX + Tailwind CSS</title>
+  <!-- HTMX -->
+  <script src="js/htmx.min.js"></script>
+  <!-- Tailwind CSS -->
+  <link href="css/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+
+  <div class="bg-white p-6 rounded-lg shadow-lg w-1/2">
+    <h1 id="form-title" class="text-3xl font-bold mb-6 text-center text-blue-700">Jakarta EE + HTMX サンプル</h1>
+
+    <!-- フォーム -->
+    <form 
+      hx-post="/submit" 
+      hx-target="#response" 
+      hx-swap="innerHTML" 
+      class="space-y-6" 
+      onsubmit="return validateForm()">
+      
+      <!-- ユーザー名 -->
+      <div>
+        <label for="username" class="block text-gray-700 font-semibold">ユーザー名</label>
+        <input id="username" name="username" type="text" 
+               placeholder="例: yamada123"
+               class="w-full mt-1 p-3 border rounded focus:ring-blue-500 focus:border-blue-500">
+        <div id="username-error" class="text-red-500 text-sm mt-1"></div>
+      </div>
+      
+      <!-- パスワード -->
+      <div>
+        <label for="password" class="block text-gray-700 font-semibold">パスワード</label>
+        <input id="password" name="password" type="password" 
+               placeholder="6文字以上のパスワード"
+               class="w-full mt-1 p-3 border rounded focus:ring-blue-500 focus:border-blue-500">
+        <div id="password-error" class="text-red-500 text-sm mt-1"></div>
+      </div>
+
+      <!-- 送信ボタン -->
+      <button type="submit"
+              class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-500">
+        送信
+      </button>
+    </form>
+
+    <!-- 結果表示エリア -->
+    <div id="response" class="mt-6 text-center text-gray-700" aria-live="polite"></div>
+  </div>
+
+  <!-- クライアント側バリデーションスクリプト -->
+  <script>
+    function validateForm() {
+      let isValid = true;
+
+      // ユーザー名のバリデーション
+      const username = document.getElementById("username");
+      const usernameError = document.getElementById("username-error");
+      if (username.value.trim() === "") {
+        usernameError.textContent = "ユーザー名は必須です。";
+        isValid = false;
+      } else {
+        usernameError.textContent = "";
+      }
+
+      // パスワードのバリデーション
+      const password = document.getElementById("password");
+      const passwordError = document.getElementById("password-error");
+      if (password.value.trim().length < 6) {
+        passwordError.textContent = "パスワードは6文字以上で入力してください。";
+        isValid = false;
+      } else {
+        passwordError.textContent = "";
+      }
+
+      return isValid; // フォーム送信を許可するかどうか
+    }
+  </script>
+
+</body>
+</html>
